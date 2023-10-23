@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="home-container">
+    <div id="home_buttons">
+        <button id="b1" data-url="{% url 'register' %}">ADMINISTRATION</button>
+        <button id="b2" data-url="{% url 'register' %}">LAWYERS</button>
+        <button id="b3" data-url="{% url 'register' %}">CLIENTS</button>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if messages %}
+<div class="alert alert-danger">
+    {% for message in messages %}
+    {{message}}
+    {% endfor %}
+</div>
+{% endif %}
+<div class="container mt-lg-5">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <h1 class="text-center fw-bolder mb-4 fs-1 mt-5">SIGN UP</h1>
+            <div class="modal-body p-5 pt-1">
+                <form method="post" action="/register/" class="">
+                    {% csrf_token %}
+                    <div class="form-floating mb-3">
+                        <input type="text" name="username" class="form-control rounded-3" id="floatingInput"
+                            placeholder="ABCD" required>
+                        <label for="floatingInput">USERNAME</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="password" name="password" class="form-control rounded-3" id="floatingPassword"
+                            placeholder="Password" required>
+                        <label for="floatingPassword">PASSWORD</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="password" name="password2" class="form-control rounded-3" id="floatingPassword2"
+                            placeholder="Password" required>
+                        <label for="floatingPassword2">RE-ENTER PASSWORD</label>
+                    </div>
+                    <button class="w-100 mb-0 btn btn-lg rounded-3 btn-danger" value type="submit">REGISTER
+                        UP</button>
+                </form>
+                <br>
+                <p>ALREADY HAVE AN ACCOUNT? <a href="{% url 'login' %}"> LOGIN IN </a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

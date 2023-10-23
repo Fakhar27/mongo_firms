@@ -1,0 +1,207 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="wrapper">
+    <aside id="sidebar">
+        <div class="h-100">
+            <div class="sidebar-logo">
+                <a href="{% url 'dashboard' %}">N L C</a>
+            </div>
+            <ul class="sidebar-nav">
+                <li class="sidebar-header">
+                    ADMIN
+                </li>
+                <li class="sidebar-item">
+                    <a href="{% url 'dashboard' %}" class="sidebar-link"><i class="fa-solid fa-bars"> </i></i>
+                        DASHBOARD</a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="{% url 'dashboard_register' %}" class="sidebar-link"><i class="fa-solid fa-user"> </i>
+                        REGISTER</a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="{% url 'dashboard_view' %}" class="sidebar-link"><i
+                            class="fa-solid fa-magnifying-glass"></i> VIEW</a>
+                </li>
+            </ul>
+        </div>
+    </aside>
+
+
+    <div class="main">
+        <nav class="navbar navbar-expand px-3 border-bottom">
+            <button class="btn" type="button" id="sidebar-toggle">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse navbar">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a href="#" id="avatar-toggle" class="nav-icon pe-md-0">
+                            <img src="/static/images/profile.jpg" class="avatar img-fluid rounded" alt="">
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end" id="avatar-dropdown">
+                            <ul class="list-unstyled">
+                                <li><a href="{% url 'profile' %}">PROFILE</a></li>
+                                <li><a href="{% url 'logout' %}">LOGOUT</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <main class="content px-3 py-2">
+            <div class="container-fluid">
+                <div class="mb-3">
+                    <h3 class="text-dark">PLEASE FILL OUT THIS FORM</h3>
+                </div>
+                <div class="full-form-dash">
+                    <form method="post" action="{% url 'dashboard_update' record.record_id_str %}" class=""
+                        enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-floating mb-3">
+                            <input type="text" name="firmname" class="form-control rounded-3" id="floatingInput"
+                                value="{{ record.firmname }}" required>
+                            <label for="floatingInput">Firm Name</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" pattern="[0-9]*" name="firm_est" class="form-control rounded-3"
+                                id="firm_est" value="{{ record.firmest }}" required>
+                            <label for="firm_est">Firm Est</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" pattern="[0-9]*" name="NTN" class="form-control rounded-3" id="NTN"
+                                value="{{ record.NTN }}" firm_est required>
+                            <label for="NTN">NTN</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" pattern="[0-9]*" name="STRN" class="form-control rounded-3" id="STRN"
+                                value="{{ record.STRN }}" required>
+                            <label for="STRN">STRN</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" name="Sponser" class="form-control rounded-3" id="floatingInput"
+                                value="{{ record.Sponser }}" required>
+                            <label for="floatingInput">Sponser SBU/BR</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <select class="form-select" name="category" id="floatingInput" required>
+                                <option selected value=""></option>
+                                <option value="{{ 1 }}" {% if record.category == 1 %}selected{% endif %}>
+                                    INVOLVEMENT IN TENDER FIXING</option>
+                                <option value="{{ 2 }}" {% if record.category == 2 %}selected{% endif %}>
+                                    SUBMISSION OF FALSE/FABRICATED/FORGED DOCS FOR CONSIDERATION OF TENDER
+                                </option>
+                                <option value="{{ 3 }}" {% if record.category == 3 %}selected{% endif %}>
+                                    INTENTIONAL VIOLATION OF IMP CONDITIONS OF CONTRACT</option>
+                                <option value="{{ 4 }}" {% if record.category == 4 %}selected{% endif %}>
+                                    NON-ADHERENCE TO QITY SPECIFICATIONS BEING PT OUT FREQUENTLY</option>
+                                <option value="{{ 5 }}" {% if record.category == 5 %}selected{% endif %}>THOSE
+                                    FIRMS,WHO ARE NOT EXEC THE CONST WORK AS PER CONTRACT AGREEMENT
+                                </option>
+                                <option value="{{ 6 }}" {% if record.category == 6 %}selected{% endif %}>
+                                    CONVICTION OF FRAUD,CORRUPTION,THEFT,FORGERY,BRIBERY OR ANY CRIMINAL
+                                    OFFENSE</option>
+                                <option value="{{ 7 }}" {% if record.category == 7 %}selected{% endif %}>WITIFUL
+                                    FAILURE OR REFUSAL TO PERFORM IN ACCORDANCE TO CONTRACT
+                                </option>
+                                <option value="{{ 8 }}" {% if record.category == 8 %}selected{% endif %}>
+                                    NOTIFIED BLACKLISTED/DEBARRED FIRM BY ANY GOVT OFFICE</option>
+                                <option value="{{ 9 }}" {% if record.category == 9 %}selected{% endif %}>OTHERS
+                                </option>
+                            </select>
+                            <label for="floatingInput">Select Category</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" value="{{ record.reason }}" name="reason" class="form-control rounded-3"
+                                id="floatingInput">
+                            <label for="floatingInput">Reason</label>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="date" name="fromdate" value="{{ record.fromdate|date:'Y-m-d' }}"
+                                        class="form-control rounded-3" id="floatingInput">
+                                    <label for="floatingInput">From-Date</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="date" name="todate" value="{{ record.todate|date:'Y-m-d' }}"
+                                        class="form-control rounded-3" id="floatingInput">
+                                    <label for="floatingInput">To-Date</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" value="{{ record.ownername }}" name="ownername"
+                                class="form-control rounded-3" id="floatingInput" required>
+                            <label for="floatingInput">Owner's Name</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" pattern="[0-9]*" value="{{ record.ownercnic }}" name="ownercnic"
+                                class="form-control rounded-3" id="CNIC" required>
+                            <label for="CNIC">Owner's CNIC</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" pattern="[0-9]*" value="{{ record.landlinenumber }}"
+                                name="landlinenumber" class="form-control rounded-3" id="landline">
+                            <label for="landline">Landline Number</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" pattern="[0-9]*" value="{{ record.phonenumber }}" name="phonenumber"
+                                class="form-control rounded-3" id="phone" required>
+                            <label for="phone">Owner's Phone Number</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="email" name="owneremail" value="{{ record.owneremail }}"
+                                class="form-control rounded-3" id="floatingInput" required>
+                            <label for="floatingInput">Owner's Email</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" name="websiteurl" value="{{ record.websiteurl }}"
+                                class="form-control rounded-3" id="floatingInput" required>
+                            <label for="floatingInput">Website-URL</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" name="address" value="{{ record.address }}"
+                                class="form-control rounded-3" id="floatingInput" required>
+                            <label for="floatingInput">Address</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" pattern="[0-9]*" value="{{ record.BAN }}" name="BAN"
+                                class="form-control rounded-3" id="BAN" required>
+                            <label for="BAN">BAN by Sis Orgs</label>
+                        </div>
+                        <div class="d-flex align-content-center justify-content-evenly">
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="radio" name="status" id="active" value="ACTIVE"
+                                    {% if record.status == 'ACTIVE' %}checked{% endif %}>
+                                <label class="form-check-label" for="active">
+                                    <span class="badge bg-success">ACTIVE</span>
+                                </label>
+                            </div>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="radio" name="status" id="inactive"
+                                    value="INACTIVE" {% if record.status == 'INACTIVE' %}checked{% endif %}>
+                                <label class="form-check-label" for="inactive">
+                                    <span class="badge bg-danger">INACTIVE</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            {% if record.uploadfile %}
+                            <div>
+                                <a href="{{ image_path_or_url }}" download>Download PDF</a>
+                            </div>
+                            {% else %}
+                            <p>No PDF available</p>
+                            {% endif %}
+                        </div>
+                        <button class="w-100 mb-0 btn btn-lg rounded-3 btn-danger" type="submit">UPDATE FIRM</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock content %}

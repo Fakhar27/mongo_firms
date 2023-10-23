@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="wrapper">
+    <aside id="sidebar">
+        <div class="h-100">
+            <div class="sidebar-logo">
+                <a href="{% url 'dashboard' %}">N L C</a>
+            </div>
+            <ul class="sidebar-nav">
+                <li class="sidebar-header">
+                    ADMIN
+                </li>
+                <li class="sidebar-item">
+                    <a href="{% url 'dashboard' %}" class="sidebar-link"><i class="fa-solid fa-bars"> </i></i>
+                        DASHBOARD</a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="{% url 'dashboard_register' %}" class="sidebar-link"><i class="fa-solid fa-user"> </i>
+                        REGISTER</a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="{% url 'dashboard_view' %}" class="sidebar-link"><i
+                            class="fa-solid fa-magnifying-glass"></i> VIEW</a>
+                </li>
+            </ul>
+        </div>
+    </aside>
+
+
+    <div class="main">
+        <nav class="navbar navbar-expand px-3 border-bottom">
+            <button class="btn" type="button" id="sidebar-toggle">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse navbar">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a href="#" id="avatar-toggle" class="nav-icon pe-md-0">
+                            <img src="/static/images/profile.jpg" class="avatar img-fluid rounded" alt="">
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end" id="avatar-dropdown">
+                            <ul class="list-unstyled">
+                                <li><a href="{% url 'profile' %}">PROFILE</a></li>
+                                <li><a href="{% url 'logout' %}">LOGOUT</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <br>
+        <main class="content px-3 py-2">
+            <div class="container-fluid">
+                <div class="mb-3">
+                    <h3>RECORDED DATA</h3>
+                </div>
+                <div class="card-body">
+                    <div class="tableviewcontainer">
+                        <table class="table">
+                            <thead class="viewlargescreen">
+                                <tr>
+                                    <th>Firm Name</th>
+                                    <!-- <th>Firm Establishment</th> -->
+                                    <!-- <th>NTN</th> -->
+                                    <!-- <th>STRN</th> -->
+                                    <!-- <th>Sponsor</th> -->
+                                    <!-- <th>Category</th> -->
+                                    <!-- <th>Reason</th> -->
+                                    <th>From Date</th>
+                                    <th>To Date</th>
+                                    <th>Owner Name</th>
+                                    <!-- <th>Owner CNIC</th> -->
+                                    <!-- <th>Landline Number</th> -->
+                                    <!-- <th>Phone Number</th> -->
+                                    <th>Owner Email</th>
+                                    <!-- <th>Website URL</th> -->
+                                    <!-- <th>Address</th> -->
+                                    <!-- <th>BAN</th> -->
+                                    <!-- <th>Upload File</th> -->
+                                    <th>STATUS</th>
+                                    <th> </th>
+                                    <th> </th>
+                                    <th> </th>
+                                </tr>
+                            </thead>
+                            <thead class="viewsmallscreen">
+                                <tr>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <br>
+                                {% for record in firm_data %}
+                                <tr>
+                                    <td class="viewname">{{ record.firmname }}</td>
+                                    <!-- <td>{{ record.firmest }}</td> -->
+                                    <!-- <td>{{ record.NTN }}</td> -->
+                                    <!-- <td>{{ record.STRN }}</td> -->
+                                    <!-- <td>{{ record.Sponser }}</td> -->
+                                    <!-- <td>{{ record.category }}</td> -->
+                                    <!-- <td>{{ record.reason }}</td> -->
+                                    <td class="viewfromdate">{{ record.fromdate }}</td>
+                                    <td class="viewtodate">{{ record.todate }}</td>
+                                    <td class="viewownername">{{ record.ownername }}</td>
+                                    <!-- <td>{{ record.ownercnic }}</td> -->
+                                    <!-- <td>{{ record.landlinenumber }}</td> -->
+                                    <!-- <td>{{ record.phonenumber }}</td> -->
+                                    <td class="viewemail">{{ record.owneremail }}</td>
+                                    <!-- <td>{{ record.websiteurl }}</td> -->
+                                    <!-- <td>{{ record.address }}</td> -->
+                                    <!-- <td>{{ record.BAN }}</td> -->
+                                    <!-- <td>{{ record.uploadfile }}</td> -->
+                                    <!-- <a href="{% url 'view_firmdata' record.record_id_str %}" class="btn btn-danger">VIEW</a> -->
+                                    <td class="viewstatus">
+                                        {% if record.status == 'ACTIVE' %}
+                                        <label class="btn btn-success disabled">ACTIVE</label>
+                                        {% else %}
+                                        <label class="btn btn-danger disabled">INACTIVE</label>
+                                        {% endif %}
+                                    </td>
+                                    <td class="viewviewbutton">
+                                        <!-- {% if record.record_id_str %} -->
+                                        <a href="{% url 'view_firmdata' record.record_id_str %}"
+                                            class="btn btn-primary"><i class="fa-solid fa-eye"></i></a>
+                                        <!-- {% else %}
+                                    <span>URL Not Available</span>
+                                    {% endif %} -->
+                                    </td>
+                                    <td class="viewupdatebutton">
+                                        <a href="{% url 'dashboard_update' record.record_id_str %}"
+                                            class="btn btn-secondary"><i class="fa-solid fa-pen"></i></a>
+                                    </td>
+                                    <td class="viewdeletebutton">
+                                        <form method="post" action="{% url 'delete_firmdata' record.record_id_str %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-danger"><i
+                                                    class="fa-solid fa-xmark"></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                <!-- <tr>
+                                <td colspan="18">
+                                    {% if record.record_id_str %}
+                                    <p>record_id_str: {{ record.record_id_str }}</p>
+                                    {% else %}
+                                    <span>URL Not Available</span>
+                                    {% endif %}
+                                </td>
+                            </tr> -->
+                                {% empty %}
+                                <tr>
+                                    <td colspan="18">No records found</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock content %}
